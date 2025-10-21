@@ -8,7 +8,7 @@
     /* Azul Secundário (Para detalhes e links importantes) */
     --color-secondary: #007BFF;
     /* Verde de Sucesso/Ação (Para botões de compra) */
-    --color-success: #28A745;
+    --color-success: #8b1ee4;
     /* Amarelo de Destaque (Para a busca ou pequenos highlights) */
     --color-highlight: #FFC107;
 
@@ -93,18 +93,28 @@ a:hover {
 .header-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 30px;
+    padding: 0 15px;
+    gap: 20px;
 }
 
 /* Logo */
 .logo {
     position: relative;
-    display: inline-block;
-    padding: 0;
-    margin: 0;
+    /* Mantido para a borboleta */
+    display: flex;
+    /* Garante que 'margin: auto' funcione bem */
+    justify-content: center;
+    /* Centraliza o conteúdo (<img>) dentro do <h1> */
+    align-items: center;
+    transform: translateX(70px);
+    /* 💥 SOLUÇÃO DEFINITIVA: Margens automáticas centralizam o bloco .logo */
+    margin-left: auto;
+    margin-right: auto;
+
+    /* REMOVIDO: flex-grow: 1; */
+    /* REMOVIDO: text-align: center; (substituído por display:flex) */
+
     line-height: 0;
-    
 }
 
 .logo a {
@@ -270,7 +280,7 @@ a:hover {
 }
 
 .search-bar button:hover {
-    background-color: #CC5500;
+    background-color: #8b1ee4;
     /* Laranja um pouco mais escuro no hover */
 }
 
@@ -601,7 +611,7 @@ a:hover {
 }
 
 .shopee-button:hover {
-    background-color: #b172ca;
+    background-color: #8b1ee4;
     /* Laranja mais escuro no hover */
     transform: translateY(-3px);
     /* Pequeno efeito de elevação */
@@ -928,6 +938,24 @@ a:hover {
     border-radius: 12px;
 }
 
+.carousel-cta-btn {
+    display: inline-block;
+    background-color: var(--color-primary);
+    /* Fundo VERDE */
+    color: var(--color-white);
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.carousel-cta-btn:hover {
+    background-color: #8b1ee4;
+    /* Verde mais escuro */
+    color: var(--color-white);
+}
+
 .featured-info {
     /* Estilos do Bloco de Texto */
     width: 40%;
@@ -953,7 +981,14 @@ a:hover {
    manter a estrutura que já temos. */
 /* Se quiser uma imagem flutuante, adicione um elemento no JS e estilize-o aqui. */
 
-
+.separator-line {
+    width: 80px;
+    height: 3px;
+    background-color: var(--color-primary);
+    /* Pega a cor roxa */
+    margin: 0px auto 35px auto;
+    border-radius: 5px;
+}
 /* Restante dos estilos de texto (h2, h3, p, botão) */
 .featured-info h3 {
     color: var(--color-primary);
@@ -1008,6 +1043,7 @@ a:hover {
     /* Tamanho e Espaçamento */
     padding: 10px 18px;
     margin-left: 20px;
+    flex-shrink: 0;
     /* Garante espaço entre o menu central e este botão */
 
 
@@ -1021,10 +1057,79 @@ a:hover {
 }
 
 .shopee-header-btn:hover {
-    background-color: #b172ca;
+    background-color: #8b1ee4;
     /* Laranja um pouco mais escuro */
     transform: translateY(-2px);
     /* Pequeno efeito de elevação */
+}
+
+.product-card {
+    /* CRÍTICO: Deve ser flex column para empurrar o bloco de ações para baixo */
+    display: flex;
+    flex-direction: column;
+    /* Adicione um pouco de padding interno aqui se a borda não estiver funcionando */
+    padding-bottom: 0;
+}
+
+.card-actions {
+    /* Bloco que contém o botão, fixado na parte inferior */
+    margin-top: auto;
+    /* Empurra o bloco para o final do card */
+    padding: 10px 20px 15px 20px;
+    /* Padding nas laterais e na base do card */
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-background-medium);
+    /* Linha divisória sutil */
+    text-align: center;
+}
+
+.card-shopee-btn {
+    /* Estilo do botão de CTA */
+    display: block;
+    width: 100%;
+    background-color: var(--color-primary);
+    /* Laranja vibrante */
+    color: var(--color-white);
+    padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.card-shopee-btn:hover {
+    background-color: #8b1ee4;
+    transform: translateY(-1px);
+}
+
+
+.logo-pulse-animation {
+    /* Define a animação a ser aplicada */
+    animation: logoPulse 0.8s ease-in-out forwards;
+
+}
+
+@keyframes logoPulse {
+    0% {
+        transform: translateX(70px) scale(1.0);
+        /* Tamanho normal */
+    }
+
+    30% {
+        transform: translateX(70px) scale(0.9);
+        /* Diminui um pouco */
+    }
+
+    60% {
+        transform: translateX(70px) scale(1.1);
+        /* Aumenta um pouco (acima do normal) */
+    }
+
+    100% {
+        transform: translateX(70px) scale(1.0);
+        /* Volta ao tamanho normal */
+    }
 }
 
 /* ================================================= */
@@ -1033,6 +1138,41 @@ a:hover {
 
 /* Para tablets na vertical e celulares grandes (até 992px) */
 @media (max-width: 992px) {
+
+     @keyframes flyInAndLand {
+
+        /* Ajuste da animação para mobile */
+        0% {
+            left: -50px;
+            top: 50%;
+            opacity: 0;
+            transform: translateY(-50%) scale(0.8);
+        }
+
+        40% {
+            left: 80%;
+            top: 20%;
+            transform: translateY(-50%) rotate(5deg) scale(1.05);
+        }
+
+        80% {
+            left: calc(100% - 60px);
+            top: 60%;
+            transform: translateY(-50%) rotate(0deg) scale(1.0);
+        }
+
+        100% {
+            left: calc(100% - 25px);
+            top: 65%;
+            opacity: 1;
+            transform: translateY(-50%) rotate(0deg) scale(1.0);
+        }
+    }
+    
+
+    .confetti-sparkle {
+            font-size: 20px;
+    }
 
     /* Ajusta o espaçamento do header para evitar estouro horizontal */
     .header-content {
@@ -1184,50 +1324,110 @@ a:hover {
 /* Para Celulares (até 768px) */
 @media (max-width: 768px) {
 
+    @keyframes logoPulse {
+        0% {
+            /* REMOVIDO: translateX(-20px) */
+            transform:  scale(1.0); /* Tamanho normal (na posição mobile) */
+        }
+    
+        30% {
+            /* REMOVIDO: translateX(-20px) */
+            transform: scale(0.9); /* Diminui um pouco */
+        }
+    
+        60% {
+            /* REMOVIDO: translateX(-20px) */
+            transform:  scale(1.1); /* Aumenta um pouco (acima do normal) */
+        }
+    
+        100% {
+            /* REMOVIDO: translateX(-20px) */
+            transform: scale(1.0); /* Volta ao tamanho normal */
+        }
+    }
     /* --- HEADER --- */
     .header-content {
-        flex-direction: row;
-        /* A Logo e o Botão Shopee Lado a Lado */
-        justify-content: space-between;
-        /* Espaçamento entre eles */
-        align-items: center;
-        flex-wrap: wrap;
-        /* Permite que os outros elementos quebrem a linha */
-        gap: 10px;
-        /* Espaçamento menor */
+            /* ⚠️ CORREÇÃO: Volta para row e space-between */
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            /* Removemos flex-wrap para evitar quebra indesejada dos itens principais */
+            flex-wrap: nowrap;
+            gap: 15px;
+            /* Espaçamento entre logo e botão */
+    }
+    
+    .logo {
+        /* ⚠️ CORREÇÃO: Remove centralização e largura automática */
+        width: auto;
+        text-align: left;
+        flex-grow: 0;
+        /* Não permite crescer */
+        margin: 0;
+        /* Remove margens automáticas */
+        transform: none;
+        /* Remove qualquer translado */
     }
 
-    .logo {
-        width: auto;
-        /* A logo pode ter seu tamanho natural */
-        text-align: left;
-        /* Alinha a logo à esquerda */
+    .main-logo-image {
+        max-height: 45px;
+        /* Logo menor no celular */
     }
+
+    .animated-butterfly {
+        /* Ajuste fino da borboleta no mobile, se necessário */
+        height: 25px;
+        /* A animação precisa ser ajustada também para o novo layout */
+    }
+
+    @keyframes flyInAndLand {
+
+        /* Ajuste da animação para mobile */
+        0% {
+            left: -50px;
+            top: 50%;
+            opacity: 0;
+            transform: translateY(-50%) scale(0.8);
+        }
+
+        40% {
+            left: 80%;
+            top: 20%;
+            transform: translateY(-50%) rotate(5deg) scale(1.05);
+        }
+
+        80% {
+            left: calc(100% - 60px);
+            top: 60%;
+            transform: translateY(-50%) rotate(0deg) scale(1.0);
+        }
+
+        100% {
+            left: calc(100% - 20px);
+            top: 65%;
+            opacity: 1;
+            transform: translateY(-50%) rotate(0deg) scale(1.0);
+        }
+    }
+    
+
+
 
     .shopee-header-btn {
         order: unset;
-        /* Retorna à ordem normal */
         margin-left: 0;
-        /* Remove margem */
+        padding: 6px 10px;
+        /* Botão menor */
+        font-size: 12px;
+        flex-shrink: 0;
+        /* Impede encolhimento */
     }
 
-    .main-header-nav {
-        order: 3;
-        /* Continua abaixo da logo e botão */
-        width: 100%;
-        margin-top: 10px;
-        /* Espaçamento do topo */
-    }
-
+    /* Removemos o Menu Central e User Nav do header em mobile (simplificação) */
+    .main-header-nav,
     .user-nav {
-        order: 4;
-        /* Fica abaixo de tudo */
-        width: 100%;
-        text-align: center;
-        margin-top: 10px;
-        margin-left: 0;
+        display: none;
     }
-
     /* --- HOME: GRID E CARROSSEL --- */
 
     .product-grid {
@@ -1250,55 +1450,95 @@ a:hover {
     /* --- CARROSSEL PRINCIPAL (CELULAR) --- */
 
     .product-carousel {
-        height: 280px;
-        /* Altura compacta para celular */
+        height: 250px; /* Altura final compacta */
+        border-radius: 12px; /* Arredondamento do contêiner PAI */
+        
+        /* ⚠️ CRÍTICO: Garante que o contêiner principal corte qualquer coisa */
+        overflow: hidden; 
+        
+        position: relative; 
+        background: #000; /* Fundo preto para o caso da imagem demorar a carregar */
+    }
+
+    .carousel-item {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        
+        /* ⚠️ CRÍTICO: O item do slide TAMBÉM deve cortar */
+        overflow: hidden;
+        border-radius: 12px; 
     }
 
     .featured-slide {
-        /* ⚠️ CRÍTICO: Layout de sobreposição */
+        /* Removemos o display:block, voltamos ao Flexbox para centralização */
+        display: flex; 
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 15px;
-        /* Padding mínimo */
+        justify-content: center; /* Centraliza verticalmente */
+        align-items: center; /* Centraliza horizontalmente */
+        
+        padding: 15px; 
+        height: 100%;
+        width: 100%; 
+        
+        position: relative; 
+        background-size: cover; 
+        background-position: center;
+        
+        overflow: hidden; /* Segurança extra */
     }
 
     .featured-slide::before {
-        background: rgba(0, 0, 0, 0.85);
-        /* ⚠️ Fundo mais escuro para contraste */
+        /* Camada escura de contraste */
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0, 0, 0, 0.8); 
+        z-index: 1;
+        /* Não precisa de border-radius aqui, o pai corta */
     }
 
     .featured-info {
-        width: 100%;
-        /* Ocupa a largura total para maximizar a área de toque */
+        /* Posicionamento relativo ao centro (pelo Flexbox do pai) */
+        position: relative; 
+        width: 90%; 
+        max-width: 300px; 
         padding: 15px;
         text-align: center;
-        background-color: rgba(255, 255, 255, 0.95);
-        /* Fundo quase sólido */
-
-        /* Ajusta o espaçamento do bloco de informações */
-        position: relative;
-        transform: none;
-        top: 0;
-        left: 0;
-        z-index: 5;
+        background-color: rgba(255, 255, 255, 0.95); 
+        border-radius: 6px;
+        z-index: 5; /* Fica acima da camada escura (::before) */
+        
+        /* Remove transformações desnecessárias */
+        transform: none; 
+        top: auto; 
+        left: auto;
     }
 
     .featured-info h2 {
-        font-size: 22px;
-        /* Título bem menor */
-        margin-bottom: 5px;
+        font-size: 18px; 
+        margin-bottom: 8px;
+        color: var(--color-text-dark); 
     }
 
     .featured-info p {
-        display: none;
-        /* Esconde a descrição longa */
+        display: none; 
     }
-
+    
     .carousel-cta-btn {
-        font-size: 14px;
-        padding: 8px 15px;
+        font-size: 13px;
+        padding: 7px 12px;
     }
+    
+    /* Botões de Navegação (Menores em mobile) */
+    .main-prev-btn, .main-next-btn {
+        padding: 10px 12px;
+        font-size: 20px;
+        width: 35px;
+        height: 35px;
+    }
+    .main-prev-btn { left: 10px; }
+    .main-next-btn { right: 10px; }
 
     /* --- PÁGINA DE DETALHES (product.html) --- */
 
@@ -1337,13 +1577,36 @@ a:hover {
 
 /* Para celulares muito pequenos (ex: iPhone SE, até 480px) */
 @media (max-width: 480px) {
+
+    @keyframes logoPulse {
+        0% {
+            /* REMOVIDO: translateX(-20px) */
+            transform: scale(1.0); /* Tamanho normal (na posição mobile) */
+        }
+    
+        30% {
+            /* REMOVIDO: translateX(-20px) */
+            transform:scale(0.9); /* Diminui um pouco */
+        }
+    
+        60% {
+            /* REMOVIDO: translateX(-20px) */
+            transform:  scale(1.1); /* Aumenta um pouco (acima do normal) */
+        }
+    
+        100% {
+            /* REMOVIDO: translateX(-20px) */
+            transform: scale(1.0); /* Volta ao tamanho normal */
+        }
+    }
+
     .product-grid {
         grid-template-columns: 1fr;
         /* Apenas 1 coluna em telas muito pequenas */
     }
 
     .carousel-section {
-        height: 200px;
+        height: 300px;
     }
 
     .carousel-item img {
@@ -1374,46 +1637,6 @@ a:hover {
 }
 
 
-.product-card {
-    /* CRÍTICO: Deve ser flex column para empurrar o bloco de ações para baixo */
-    display: flex;
-    flex-direction: column;
-    /* Adicione um pouco de padding interno aqui se a borda não estiver funcionando */
-    padding-bottom: 0;
-}
-
-.card-actions {
-    /* Bloco que contém o botão, fixado na parte inferior */
-    margin-top: auto;
-    /* Empurra o bloco para o final do card */
-    padding: 10px 20px 15px 20px;
-    /* Padding nas laterais e na base do card */
-    background-color: var(--color-white);
-    border-top: 1px solid var(--color-background-medium);
-    /* Linha divisória sutil */
-    text-align: center;
-}
-
-.card-shopee-btn {
-    /* Estilo do botão de CTA */
-    display: block;
-    width: 100%;
-    background-color: var(--color-primary);
-    /* Laranja vibrante */
-    color: var(--color-white);
-    padding: 8px 10px;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.card-shopee-btn:hover {
-    background-color: #CC5500;
-    transform: translateY(-1px);
-}
-
 /* --- AJUSTE EM MOBILE --- */
 @media (max-width: 768px) {
     .card-actions {
@@ -1422,29 +1645,3 @@ a:hover {
     }
 }
 
-.logo-pulse-animation {
-    /* Define a animação a ser aplicada */
-    animation: logoPulse 0.8s ease-in-out forwards;
-}
-
-@keyframes logoPulse {
-    0% {
-        transform: scale(1.0);
-        /* Tamanho normal */
-    }
-
-    30% {
-        transform: scale(0.9);
-        /* Diminui um pouco */
-    }
-
-    60% {
-        transform: scale(1.1);
-        /* Aumenta um pouco (acima do normal) */
-    }
-
-    100% {
-        transform: scale(1.0);
-        /* Volta ao tamanho normal */
-    }
-}
