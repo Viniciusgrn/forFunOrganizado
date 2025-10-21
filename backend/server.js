@@ -54,7 +54,7 @@ const initializeDB = () => {
         if (!err) {
             db.get(`SELECT id FROM users WHERE username = 'admin'`, (err, row) => {
                 if (!row) {
-                    db.run(`INSERT INTO users (username, password) VALUES ('admin', '123456')`);
+                    db.run(`INSERT INTO users (username, password) VALUES ('eduardo', 'Centauro@10')`);
                     console.log("Usuário admin padrão criado (admin/123456).");
                 }
             });
