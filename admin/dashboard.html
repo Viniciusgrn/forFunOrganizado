@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="icon" type="image/png" href="/borboleta.png">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <header>
+            <h1>Gerenciamento de Produtos</h1>
+            <button id="logoutButton">Sair</button>
+        </header>
+
+        <section class="form-section">
+            <h2>Adicionar/Editar Produto</h2>
+            <form id="productForm" enctype="multipart/form-data">
+                <input type="hidden" id="productId" name="id">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required>
+        
+                <label for="mediaFiles">Imagens e Vídeos (Até 5 arquivos):</label>
+                <input type="file" id="mediaFiles" name="mediaFiles" multiple accept="image/*,video/*">
+        
+                <label for="shopeeLink">Link Shopee:</label>
+                <input type="url" id="shopeeLink" name="shopeeLink" required>
+        
+                <label for="description">Descrição:</label>
+                <textarea id="description" name="description" required></textarea>
+        
+                <button type="submit" id="saveButton">Salvar Produto</button>
+        
+                <div id="currentMedia" style="margin-top: 15px;"></div>
+            </form>
+        </section>
+        <section class="list-section">
+            <h2>Produtos Atuais</h2>
+            <table id="productsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Visualizações</th>
+                        <th>Cliques Shopee</th>
+                        <th>Destaque</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script src="admin-crud.js"></script>
+</body>
+</html>

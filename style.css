@@ -1,0 +1,1450 @@
+/* ================================================= */
+/* VARIÁVEIS DE CORES E RESET (TEMA ROBUSTO/LARANJA) */
+/* ================================================= */
+:root {
+    /* Laranja Opaco / Telha (Cor Principal - mais vibrante mas ainda sóbrio) */
+    --color-primary: #a929db;
+    /* Laranja um pouco mais vivo, mas não berrante */
+    /* Azul Secundário (Para detalhes e links importantes) */
+    --color-secondary: #007BFF;
+    /* Verde de Sucesso/Ação (Para botões de compra) */
+    --color-success: #28A745;
+    /* Amarelo de Destaque (Para a busca ou pequenos highlights) */
+    --color-highlight: #FFC107;
+
+    /* Tons de Cinza para Texto e Fundos */
+    --color-text-dark: #4b555f;
+    /* Muito escuro para texto principal */
+    --color-text-medium: #495057;
+    /* Cinza médio para descrições */
+    --color-text-light: #6C757D;
+    /* Cinza claro para detalhes e rodapé */
+    --color-background-light: #F8F9FA;
+    /* Fundo geral da página (quase branco) */
+    --color-background-medium: #efe9ed;
+    /* Fundo de seções/cards (um cinza claro) */
+    --color-white: #FFFFFF;
+
+    /* Cores do Header e Footer */
+    --color-header-footer-bg: #FF7F00;
+    /* Preto bem escuro/quase cinza para header e footer */
+    --color-header-footer-text: #F8F9FA;
+    /* Texto branco no header/footer */
+
+    /* Sombras */
+    --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Reset básico e tipografia */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    /* Suaviza transições em todos os elementos */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body {
+    background-color: var(--color-background-light);
+    /* Fundo geral mais claro e suave */
+    color: var(--color-text-dark);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    /* Melhor renderização de fontes */
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-secondary);
+    /* Links padrão em azul secundário */
+}
+
+a:hover {
+    color: var(--color-primary);
+    /* Laranja no hover dos links */
+}
+
+/* ================================================= */
+/* CABEÇALHO E NAVEGAÇÃO (HEADER) */
+/* ================================================= */
+
+.main-header {
+    background-color: var(--color-header-footer-bg);
+    /* Fundo escuro robusto */
+    padding: 15px 0;
+    box-shadow: var(--shadow-md);
+    /* Sombra mais pronunciada para o header */
+    position: sticky;
+    /* Mantém o header fixo no topo ao rolar */
+    top: 0;
+    z-index: 1000;
+    /* Garante que fique acima de outros elementos */
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+/* Logo */
+.logo {
+    position: relative;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+    
+}
+
+.logo a {
+    text-decoration: none;
+    color: var(--color-header-footer-text);
+    /* Cor do texto da logo */
+}
+
+.main-logo-image {
+    max-height: 100px;
+    /* Altura da logo */
+    width: auto;
+    display: block;
+}
+
+/* Animação Borboleta */
+.animated-butterfly {
+    position: absolute;
+    height: 60px;
+    /* Ajuste o tamanho da borboleta */
+    width: auto;
+    left: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    animation: flyInAndLand 3s ease-out forwards;
+    animation-delay: 1s;
+}
+
+@keyframes flyInAndLand {
+
+    /* 0% - Início (Fora da tela, invisível) */
+    0% {
+        left: -100px;
+        top: 50%;
+        opacity: 0;
+        transform: translateY(-50%) rotate(0deg) scale(0.8);
+    }
+
+    /* 20% - Entrada e Subida */
+    20% {
+        left: 15%;
+        top: 40%;
+        opacity: 1;
+        transform: translateY(-50%) rotate(-4deg) scale(1.0);
+    }
+
+    /* 40% - Ponto Alto do Arco */
+    40% {
+        left: 50%;
+        top: 25%;
+        /* Altura máxima */
+        transform: translateY(-50%) rotate(5deg) scale(1.05);
+    }
+
+    /* 60% - Estabilização de Rotação */
+    60% {
+        left: 80%;
+        top: 50%;
+        /* ⚠️ A rotação é zerada AQUI, forçando um movimento lateral puro dali em diante */
+        transform: translateY(-50%) rotate(0deg) scale(1.0);
+    }
+
+    /* 85% - Início do Deslize Lento e Ponto de Mira */
+    85% {
+        left: calc(100% - 70px);
+        top: 65%;
+        /* Estabiliza na altura final de pouso */
+        /* Garante que o movimento seja apenas o deslize horizontal */
+        transform: translateY(-50%) rotate(0deg) scale(1.0);
+    }
+
+    /* 100% - Pouso Final */
+    100% {
+        left: calc(100% - 40px);
+        top: 65%;
+        opacity: 1;
+        transform: translateY(-50%) rotate(0deg) scale(1.0);
+    }
+}
+
+/* Animação Confetti Sparkle */
+.sparkle-container {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 10;
+}
+
+.confetti-sparkle {
+    position: absolute;
+    font-size: 24px;
+    opacity: 0;
+    color: var(--color-highlight);
+    /* Garante que os brilhos sejam amarelos */
+}
+
+@keyframes sparkle-fall {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translate(var(--end-x), var(--end-y)) scale(0.8);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(var(--end-x), 200px) scale(0.5);
+    }
+}
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    flex-grow: 1;
+    max-width: 600px;
+    background-color: var(--color-white);
+    /* Fundo branco para a busca */
+    border-radius: 8px;
+    /* Bordas mais arredondadas */
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    /* Sombra sutil para a busca */
+    border: 1px solid var(--color-background-medium);
+    /* Borda discreta */
+}
+
+.search-bar input {
+    flex-grow: 1;
+    padding: 12px 18px;
+    /* Mais padding */
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background-color: transparent;
+    /* Fundo transparente para herdar do .search-bar */
+    color: var(--color-text-dark);
+}
+
+.search-bar input::placeholder {
+    color: var(--color-text-light);
+}
+
+.search-bar button {
+    background-color: var(--color-primary);
+    /* Laranja vibrante para o botão de busca */
+    border: none;
+    padding: 12px 18px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-white);
+    /* Texto branco no botão laranja */
+    display: flex;
+    /* Para centralizar o ícone */
+    align-items: center;
+    justify-content: center;
+}
+
+.search-bar button:hover {
+    background-color: #CC5500;
+    /* Laranja um pouco mais escuro no hover */
+}
+
+.user-nav a {
+    color: var(--color-header-footer-text);
+    /* Texto branco para links do usuário */
+    margin-left: 25px;
+    /* Mais espaçamento */
+    font-size: 16px;
+    /* Fonte um pouco maior */
+    font-weight: 500;
+    padding: 5px 0;
+}
+
+.user-nav a:hover {
+    color: var(--color-primary);
+    /* Laranja no hover */
+    text-decoration: underline;
+}
+
+
+/* ================================================= */
+/* CONTEÚDO PRINCIPAL (HOME) */
+/* ================================================= */
+
+.main-content {
+    /* Remove os estilos de caixa grande */
+    padding-top: 30px;
+    padding-bottom: 40px;
+
+    /* Remove a centralização e a sombra do bloco principal */
+    max-width: 100%;
+    /* Permite que ele use a largura total do container pai */
+    margin: 0;
+    /* Remove margens externas */
+
+    /* Reverte a aparência para o que era antes */
+    background-color: var(--color-background-light);
+    border-radius: 0;
+    box-shadow: none;
+}
+
+
+
+.section-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 40px 0 10px 0;
+    color: var(--color-text-dark);
+    text-align: center;
+    border-bottom: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px
+        /* Mantemos sem borda */
+}
+
+/* Carousel */
+.carousel-section {
+    margin-bottom: 50px;
+    /* Mais espaçamento abaixo do carrossel */
+}
+
+.product-carousel {
+    position: relative;
+    overflow: hidden;
+    height: 380px;
+    /* Carrossel um pouco mais alto */
+    border-radius: 12px;
+    /* Bordas mais arredondadas */
+    box-shadow: var(--shadow-sm);
+    /* Sombra marcante para o carrossel */
+    background-color: var(--color-white);
+    /* Fundo branco para o carrossel */
+}
+
+
+.carousel-item {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* Ocupa 100% da altura do carrossel */
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out;
+    /* Transição mais suave e longa */
+}
+
+.carousel-item.active {
+    opacity: 1;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.prev-btn,
+.next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    /* Fundo mais escuro para os botões */
+    color: var(--color-white);
+    border: none;
+    padding: 18px 20px;
+    /* Botões maiores */
+    cursor: pointer;
+    z-index: 10;
+    font-size: 28px;
+    /* Ícones maiores */
+    line-height: 1;
+    border-radius: 50%;
+    /* Botões totalmente redondos */
+    transition: background-color 0.3s ease;
+}
+
+.prev-btn:hover,
+.next-btn:hover {
+    background-color: var(--color-primary);
+    /* Laranja no hover */
+}
+
+.prev-btn {
+    left: 20px;
+}
+
+.next-btn {
+    right: 20px;
+}
+
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    /* Adaptável e com min-width */
+    gap: 25px;
+    /* Mais espaçamento entre os cards */
+    padding-bottom: 0;
+    /* Mais padding no final */
+}
+
+.product-grid-section {
+    /* Repete os estilos de caixa para envolver o grid principal */
+    margin-bottom: 30px;
+    margin-top: 10px;
+
+    background-color: var(--color-white);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    padding: 20px;
+}
+
+.product-card {
+    background-color: var(--color-white);
+    border-radius: 10px;
+    /* Bordas bem arredondadas */
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    /* Sombra mais pronunciada */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    /* Efeito de "levitar" mais evidente */
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+    /* Sombra mais forte no hover */
+}
+
+.product-card img {
+    width: 100%;
+    height: 280px;
+    /* Imagens um pouco maiores */
+    object-fit: cover;
+    border-bottom: 1px solid var(--color-background-medium);
+    /* Borda suave */
+}
+
+.product-info {
+    padding: 15px 20px;
+    /* Mais padding interno */
+    flex-grow: 1;
+    /* Faz o info preencher o espaço restante */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Empurra preço para cima, nome para baixo */
+}
+
+.product-price {
+    font-size: 24px;
+    /* Preço maior e mais visível */
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+    /* Espaçamento abaixo do preço */
+}
+
+.product-name {
+    /* Novo estilo de destaque para o nome */
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-primary);
+    /* Use a cor principal para o nome */
+
+    margin-bottom: 8px;
+    height: auto;
+    /* Permite o nome ter mais linhas se for grande */
+    overflow: hidden;
+    margin-top: 0;
+}
+
+
+/* ================================================= */
+/* PRODUTO DETALHES (product.html) */
+/* ================================================= */
+
+.product-details-container-body {
+    background-color: var(--color-background-light);
+}
+
+.product-details-container {
+    display: flex;
+    gap: 40px;
+    padding: 40px 15px;
+    /* Reduz o padding interno da caixa branca */
+    background-color: var(--color-white);
+    margin-top: 30px;
+    padding-bottom: 63px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-gallery {
+    flex: 1;
+    max-width: 500px;
+}
+
+.product-gallery img {
+    width: 100%;
+    border-radius: 8px;
+    /* Bordas arredondadas para a imagem */
+    border: 1px solid var(--color-background-medium);
+    /* Borda discreta */
+    box-shadow: var(--shadow-sm);
+    /* Sombra sutil para a imagem */
+}
+
+.product-info-area {
+    flex: 2;
+}
+
+.product-info-area h1 {
+    font-size: 38px;
+    /* Título do produto maior */
+    margin-bottom: 15px;
+    color: var(--color-text-dark);
+}
+
+.product-price-detail {
+    font-size: 2.2em;
+    /* ⚠️ Reduzido de 2.5em para 2.2em */
+    font-weight: 700;
+    color: var(--color-success);
+    /* Corrigido de var(--color-action-green) para var(--color-success) */
+    margin-bottom: 5px;
+}
+
+.product-description-box {
+    margin-bottom: 40px;
+    padding: 20px;
+    /* Mais padding */
+    border: 1px solid var(--color-background-medium);
+    border-radius: 8px;
+    background-color: var(--color-background-light);
+    /* Fundo levemente diferente */
+}
+
+.product-description-box h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: var(--color-text-dark);
+}
+
+.product-description-box p {
+    font-size: 1.1em;
+    /* ⚠️ Aumentado de 1em para 1.1em */
+    line-height: 1.6;
+}
+
+.product-description {
+    font-size: 14px;
+    color: var(--color-text-medium);
+    /* Cinza suave para o corpo do texto */
+    line-height: 1.4;
+    height: 3em;
+    /* Limita a descrição a aproximadamente 3 linhas */
+    overflow: hidden;
+}
+
+.shopee-button {
+    background-color: var(--color-primary);
+    /* Laranja vibrante */
+    color: var(--color-white);
+    padding: 15px 25px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: 600;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+
+    /* ⚠️ CRÍTICO: Faz o botão ocupar 100% da largura e se comportar como bloco */
+    width: 100%;
+    display: block;
+
+    margin-top: 30px;
+    /* Adiciona um espaço acima do botão */
+    box-shadow: var(--shadow-md);
+    /* Adiciona uma sombra para destaque */
+}
+
+.shopee-button:hover {
+    background-color: #b172ca;
+    /* Laranja mais escuro no hover */
+    transform: translateY(-3px);
+    /* Pequeno efeito de elevação */
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.25);
+    /* Sombra mais forte no hover */
+}
+
+.shopee-note {
+    font-size: 13px;
+    color: var(--color-text-light);
+    margin-top: 15px;
+}
+
+.product-gallery-wrapper {
+    display: flex;
+    gap: 15px;
+    max-height: 550px;
+    width: 580px;
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+/* Contêiner das Miniaturas (Thumbnails) */
+.media-thumbnails {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    /* ⚠️ CRÍTICO: Define a largura exata para que o main-media-display não invada */
+    width: 75px;
+
+    max-height: 550px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* Cada miniatura */
+.media-thumbnail-item {
+    width: 60px;
+    /* Largura fixa para a miniatura */
+    height: 60px;
+    border: 2px solid var(--color-background-medium);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.media-thumbnail-item:hover,
+.media-thumbnail-item.active {
+    border-color: var(--color-primary);
+    /* Laranja no item ativo */
+}
+
+.media-thumbnail-item img,
+.media-thumbnail-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Imagem Principal / Display de Mídia */
+.main-media-display {
+    /* Removemos flex-grow: 1, pois a largura total já é fixa pelo pai */
+
+    /* CRÍTICO: Definimos uma LARGURA e ALTURA FIXAS (para estabilidade total) */
+    width: 490px;
+    /* Largura fixa (580 - 75 - 15) */
+    height: 550px;
+    /* Altura fixa (para estabilidade vertical) */
+
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-media-display img,
+.main-media-display video {
+    /* ⚠️ SOLUÇÃO DE AJUSTE HORIZONTAL: */
+    max-width: 100%;
+    height: auto;
+    max-height: 500px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* ================================================= */
+/* RODAPÉ (FOOTER) */
+/* ================================================= */
+
+.main-footer {
+    background-color: var(--color-header-footer-bg);
+    color: var(--color-header-footer-text);
+
+    /* ⚠️ REDUZIMOS O PADDING VERTICAL DO FOOTER PARA TORNÁ-LO MAIS COMPACTO */
+    padding-top: 25px;
+    margin-top: 20px;
+    /* Remove padding extra do bloco principal */
+
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.footer-content {
+    text-align: center;
+
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    /* Largura mínima para as seções do footer */
+    padding: 0 20px;
+    /* Mais padding */
+    /* Espaçamento para telas menores */
+}
+
+.footer-section h4 {
+    color: var(--color-white);
+    font-size: 20px;
+    /* Títulos do footer maiores */
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.footer-section p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--color-header-footer-text);
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li a {
+    color: var(--color-header-footer-text);
+    text-decoration: none;
+    line-height: 2.2;
+    /* Mais espaçamento entre os itens */
+    font-size: 15px;
+    transition: color 0.2s;
+}
+
+.footer-section ul li a:hover {
+    color: var(--color-primary);
+}
+
+.footer-bottom {
+    background-color: #212529;
+    color: var(--color-text-light);
+    /* ⚠️ REDUZIMOS O PADDING DA BARRA INFERIOR */
+    padding: 12px 0;
+
+    font-size: 13px;
+    text-align: center;
+}
+
+.footer-link{
+    text-decoration: none; 
+    color: var(--color-text-dark, #333333);
+}
+
+/* ================================================= */
+/* CARROSSEL DE SUGESTÕES (SUGESTÕES PARA VOCÊ) */
+/* ================================================= */
+
+.suggestions-carousel-section {
+    position: relative;
+    margin-bottom: 50px;
+    padding: 0;
+    overflow: hidden;
+    /* Importante para o carrossel */
+    background-color: var(--color-white);
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+}
+
+.suggestions-carousel-content {
+    display: flex;
+    overflow-x: scroll;
+    /* Permite a rolagem horizontal */
+    scroll-behavior: smooth;
+    /* Rolagem suave ao usar as setas */
+    padding: 0 50px;
+    /* Espaço para as setas laterais */
+}
+
+/* Esconde a barra de rolagem (melhor experiência de usuário) */
+.suggestions-carousel-content::-webkit-scrollbar {
+    display: none;
+}
+
+.suggestions-carousel-content {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+/* Os cards de produto dentro deste carrossel devem manter o estilo do .product-card,
+   mas com margem à direita para separação. */
+.suggestions-carousel-content .product-card {
+    flex: 0 0 auto;
+    /* Não permite que os cards diminuam ou cresçam */
+    width: 280px;
+    /* Fixa a largura do card (ou use o valor minmax do seu grid) */
+    margin-right: 20px;
+    /* Espaçamento entre os cards */
+
+    /* REMOVA ESTA LINHA DE CÓDIGO (box-shadow: var(--shadow-sm);) */
+}
+
+/* Estilo para os botões de navegação lateral */
+.suggestions-prev-btn,
+.suggestions-next-btn {
+    position: absolute;
+
+    /* CRÍTICO: Posicionamento Centrado */
+    top: 50%;
+    transform: translateY(-50%);
+
+    /* Cores e Aparência */
+    background: var(--color-white);
+    color: var(--color-text-dark);
+    border: none;
+
+    /* Formato e Tamanho */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+    /* ⚠️ SOLUÇÃO DE CENTRALIZAÇÃO DO ÍCONE */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Tipografia/Ícone */
+    font-size: 24px;
+    /* Aumentado ligeiramente o tamanho da fonte para melhor visualização */
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s, box-shadow 0.2s;
+    z-index: 5;
+}
+
+.suggestions-prev-btn {
+    left: 5px;
+}
+
+.suggestions-next-btn {
+    right: 5px;
+}
+
+/* Efeito Hover */
+.suggestions-prev-btn:hover,
+.suggestions-next-btn:hover {
+    background-color: var(--color-primary);
+    /* Laranja ao passar o mouse */
+    color: var(--color-white);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-section,
+.suggestions-carousel-section,
+.product-grid {
+    /* Aplicamos ao grid inteiro */
+    /* Cria a margem externa para separar as caixas */
+    margin-bottom: 30px;
+    margin-top: 10px;
+
+    /* Estilos de Caixa (Borda, Sombra, Fundo Branco) */
+    background-color: var(--color-white);
+    border-radius: 12px;
+    box-shadow: -8px 10px 15px rgba(0, 0, 0, 0.15);
+
+    /* Padding interno para que o conteúdo não cole nas bordas */
+    padding: 20px;
+}
+
+
+.product-carousel .carousel-item {
+    /* Garante que o item ocupe todo o espaço da caixa */
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.featured-slide {
+    /* Configura o fundo do slide com a imagem do produto */
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    width: 100%;
+
+    /* ⚠️ CENTRALIZA E DEFINE LAYOUT DE COLUNAS: */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Novo: Espaça o bloco de texto e a área de imagem */
+    padding: 40px;
+
+    position: relative;
+}
+
+.featured-slide::before {
+    /* Camada escura para dar contraste ao texto */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* ⚠️ Torna a camada mais escura para melhor legibilidade */
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 1;
+    border-radius: 12px;
+}
+
+.featured-info {
+    /* Estilos do Bloco de Texto */
+    width: 40%;
+    /* Ocupa um espaço decente, mas não a tela toda */
+    min-width: 300px;
+    padding: 25px;
+    /* Mais padding */
+
+    /* ⚠️ Fundo BRANCO SÓLIDO (não semi-transparente) para legibilidade máxima */
+    background-color: var(--color-white);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    /* Alinha o texto à esquerda (mais natural) */
+
+    /* Garante que o texto fique acima da camada escura */
+    z-index: 2;
+}
+
+/* ⚠️ ADICIONAL: Criar espaço para uma imagem do produto mais visível */
+/* O bloco abaixo simula uma coluna de imagem separada dentro do featured-slide.
+   Se você quiser a imagem apenas como background, pode ignorar este bloco e
+   manter a estrutura que já temos. */
+/* Se quiser uma imagem flutuante, adicione um elemento no JS e estilize-o aqui. */
+
+
+/* Restante dos estilos de texto (h2, h3, p, botão) */
+.featured-info h3 {
+    color: var(--color-primary);
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.featured-info h2 {
+    font-size: 38px;
+    /* Título maior */
+    color: var(--color-text-dark);
+    margin-bottom: 15px;
+}
+
+.featured-info p {
+    color: var(--color-text-medium);
+    margin-bottom: 25px;
+}
+
+.video-preview-icon {
+    width: 100%;
+    height: 100%;
+    background-color: #212529;
+    /* Fundo escuro */
+    color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.video-preview-icon::before {
+    /* Ícone de Play grande */
+    content: "▶";
+    font-size: 20px;
+    margin-bottom: 2px;
+    color: var(--color-primary);
+    /* Laranja para destaque */
+}
+
+.shopee-header-btn {
+    /* Cor e Aparência */
+    display: inline-block;
+    background-color: var(--color-primary);
+    /* Laranja vibrante */
+    color: var(--color-white);
+
+    /* Tamanho e Espaçamento */
+    padding: 10px 18px;
+    margin-left: 20px;
+    /* Garante espaço entre o menu central e este botão */
+
+
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+
+    /* Efeito de Interação */
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.shopee-header-btn:hover {
+    background-color: #b172ca;
+    /* Laranja um pouco mais escuro */
+    transform: translateY(-2px);
+    /* Pequeno efeito de elevação */
+}
+
+/* ================================================= */
+/* RESPONSIVIDADE (MEDIA QUERIES) - AJUSTES FINAIS */
+/* ================================================= */
+
+/* Para tablets na vertical e celulares grandes (até 992px) */
+@media (max-width: 992px) {
+
+    /* Ajusta o espaçamento do header para evitar estouro horizontal */
+    .header-content {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* Reduz o tamanho da fonte no menu central para caber mais itens */
+    .main-header-nav {
+        width: 100%;
+        order: 3;
+        justify-content: space-around;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .main-header-nav a {
+        font-size: 14px;
+        gap: 20px;
+    }
+
+    /* Reduz um pouco o padding dos botões de CTA */
+    .shopee-header-btn {
+        padding: 8px 14px;
+        font-size: 14px;
+        margin-left: 10px;
+        order: 2;
+        /* Fica na segunda "linha" */
+        width: auto;
+        /* Permite que o botão se ajuste ao conteúdo */
+    }
+
+    .user-nav {
+        order: 4;
+        /* Vai para a última linha */
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Reduz a largura máxima do search bar */
+    .search-bar {
+        max-width: 100%;
+    }
+
+    /* Reduz o tamanho da logo */
+    .main-logo-image {
+        max-height: 60px;
+    }
+
+    .animated-butterfly {
+        height: 30px;
+    }
+
+    /* --- HOME: GRID DE PRODUTOS --- */
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 Colunas em Tablet */
+        gap: 15px;
+        padding-bottom: 30px;
+    }
+
+    /* --- CARROSSEL PRINCIPAL (AJUSTE) --- */
+    .product-carousel {
+        height: 350px;
+        /* Reduz a altura */
+    }
+
+    .featured-slide {
+        /* Garante que o texto se alinhe ao centro da caixa */
+        padding: 30px;
+        justify-content: center;
+        /* Centraliza o conteúdo horizontalmente */
+    }
+
+    /* O bloco de informações agora é mais estreito e centralizado */
+    .featured-info {
+        width: 70%;
+        /* Ocupa mais espaço horizontal para legibilidade */
+        min-width: auto;
+        padding: 20px;
+        text-align: center;
+        /* Centraliza o texto */
+    }
+
+    .featured-info h2 {
+        font-size: 30px;
+        /* Reduz o tamanho do título */
+    }
+
+    /* --- PÁGINA DE DETALHES (product.html) --- */
+
+    /* Ajuste para o Container de Detalhes do Produto */
+    .product-details-container {
+        flex-direction: column;
+        /* Força a coluna em tablets */
+        align-items: center;
+        /* Centraliza os blocos na coluna */
+        gap: 25px;
+        padding: 40px 20px;
+        /* Ajusta o padding do container */
+    }
+
+    /* Galeria de Fotos */
+    .product-gallery-wrapper {
+        flex-direction: column;
+        /* Miniaturas embaixo da imagem principal */
+        max-width: 400px;
+        /* Limita a largura da galeria em tablets */
+        width: 100%;
+        max-height: none;
+        /* Remove limitação de altura vertical para a galeria */
+    }
+
+    .media-thumbnails {
+        flex-direction: row;
+        /* Miniaturas continuam em linha para ocupar menos espaço */
+        justify-content: center;
+        /* Centraliza as miniaturas */
+        overflow-x: auto;
+        /* Permite rolagem se houver muitas miniaturas */
+        width: 100%;
+    }
+
+    .main-media-display {
+        width: 100%;
+        /* Ocupa toda a largura disponível */
+        height: 350px;
+        /* Altura fixa para tablets */
+        max-width: none;
+    }
+
+    /* --- FOOTER --- */
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        text-decoration: none;
+        color: var(--color-text-dark, #333333);
+    }
+
+    .footer-section {
+        min-width: 100%;
+        margin-bottom: 25px;
+    }
+}
+
+
+/* Para Celulares (até 768px) */
+@media (max-width: 768px) {
+
+    /* --- HEADER --- */
+    .header-content {
+        flex-direction: row;
+        /* A Logo e o Botão Shopee Lado a Lado */
+        justify-content: space-between;
+        /* Espaçamento entre eles */
+        align-items: center;
+        flex-wrap: wrap;
+        /* Permite que os outros elementos quebrem a linha */
+        gap: 10px;
+        /* Espaçamento menor */
+    }
+
+    .logo {
+        width: auto;
+        /* A logo pode ter seu tamanho natural */
+        text-align: left;
+        /* Alinha a logo à esquerda */
+    }
+
+    .shopee-header-btn {
+        order: unset;
+        /* Retorna à ordem normal */
+        margin-left: 0;
+        /* Remove margem */
+    }
+
+    .main-header-nav {
+        order: 3;
+        /* Continua abaixo da logo e botão */
+        width: 100%;
+        margin-top: 10px;
+        /* Espaçamento do topo */
+    }
+
+    .user-nav {
+        order: 4;
+        /* Fica abaixo de tudo */
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+        margin-left: 0;
+    }
+
+    /* --- HOME: GRID E CARROSSEL --- */
+
+    .product-grid {
+        grid-template-columns: 1fr;
+        /* ⚠️ CRÍTICO: Grid vira 1 coluna */
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .product-card {
+        margin: 0 auto;
+        max-width: 350px;
+    }
+
+    /* Reduz o tamanho da imagem do card */
+    .product-card img {
+        height: 250px;
+    }
+
+    /* --- CARROSSEL PRINCIPAL (CELULAR) --- */
+
+    .product-carousel {
+        height: 280px;
+        /* Altura compacta para celular */
+    }
+
+    .featured-slide {
+        /* ⚠️ CRÍTICO: Layout de sobreposição */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        /* Padding mínimo */
+    }
+
+    .featured-slide::before {
+        background: rgba(0, 0, 0, 0.85);
+        /* ⚠️ Fundo mais escuro para contraste */
+    }
+
+    .featured-info {
+        width: 100%;
+        /* Ocupa a largura total para maximizar a área de toque */
+        padding: 15px;
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.95);
+        /* Fundo quase sólido */
+
+        /* Ajusta o espaçamento do bloco de informações */
+        position: relative;
+        transform: none;
+        top: 0;
+        left: 0;
+        z-index: 5;
+    }
+
+    .featured-info h2 {
+        font-size: 22px;
+        /* Título bem menor */
+        margin-bottom: 5px;
+    }
+
+    .featured-info p {
+        display: none;
+        /* Esconde a descrição longa */
+    }
+
+    .carousel-cta-btn {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+
+    /* --- PÁGINA DE DETALHES (product.html) --- */
+
+    /* Galeria de Fotos */
+    .product-gallery-wrapper {
+        flex-direction: column;
+        /* Miniaturas voltam para baixo da imagem principal */
+        width: 100%;
+        max-width: none;
+    }
+
+    .media-thumbnails {
+        flex-direction: row;
+        /* Miniaturas em linha */
+        justify-content: center;
+        /* Centraliza as miniaturas */
+        width: 100%;
+        max-height: 60px;
+        /* Altura mais compacta */
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    .main-media-display {
+        width: 100%;
+        /* Ocupa toda a largura */
+        height: 280px;
+        /* Altura fixa para celulares */
+        margin: 0 auto;
+        /* ⚠️ CRÍTICO: CENTRALIZA A IMAGEM PRINCIPAL */
+        max-width: 350px;
+        /* Limita a largura para centralizar melhor */
+    }
+}
+
+
+/* Para celulares muito pequenos (ex: iPhone SE, até 480px) */
+@media (max-width: 480px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+        /* Apenas 1 coluna em telas muito pequenas */
+    }
+
+    .carousel-section {
+        height: 200px;
+    }
+
+    .carousel-item img {
+        height: 200px;
+    }
+
+    .main-header {
+        padding: 10px 0;
+    }
+
+    .main-logo-image {
+        max-height: 50px;
+    }
+
+    .search-bar input {
+        padding: 10px;
+    }
+
+    .search-bar button {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .user-nav a {
+        margin-left: 10px;
+        font-size: 14px;
+    }
+}
+
+
+.product-card {
+    /* CRÍTICO: Deve ser flex column para empurrar o bloco de ações para baixo */
+    display: flex;
+    flex-direction: column;
+    /* Adicione um pouco de padding interno aqui se a borda não estiver funcionando */
+    padding-bottom: 0;
+}
+
+.card-actions {
+    /* Bloco que contém o botão, fixado na parte inferior */
+    margin-top: auto;
+    /* Empurra o bloco para o final do card */
+    padding: 10px 20px 15px 20px;
+    /* Padding nas laterais e na base do card */
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-background-medium);
+    /* Linha divisória sutil */
+    text-align: center;
+}
+
+.card-shopee-btn {
+    /* Estilo do botão de CTA */
+    display: block;
+    width: 100%;
+    background-color: var(--color-primary);
+    /* Laranja vibrante */
+    color: var(--color-white);
+    padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.card-shopee-btn:hover {
+    background-color: #CC5500;
+    transform: translateY(-1px);
+}
+
+/* --- AJUSTE EM MOBILE --- */
+@media (max-width: 768px) {
+    .card-actions {
+        padding: 10px 15px;
+        /* Reduz o padding em mobile */
+    }
+}
+
+.logo-pulse-animation {
+    /* Define a animação a ser aplicada */
+    animation: logoPulse 0.8s ease-in-out forwards;
+}
+
+@keyframes logoPulse {
+    0% {
+        transform: scale(1.0);
+        /* Tamanho normal */
+    }
+
+    30% {
+        transform: scale(0.9);
+        /* Diminui um pouco */
+    }
+
+    60% {
+        transform: scale(1.1);
+        /* Aumenta um pouco (acima do normal) */
+    }
+
+    100% {
+        transform: scale(1.0);
+        /* Volta ao tamanho normal */
+    }
+}

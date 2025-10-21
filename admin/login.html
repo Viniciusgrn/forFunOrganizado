@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="icon" type="image/png" href="/borboleta.png">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <h2>Acesso Administrativo</h2>
+        <form id="loginForm">
+            <label for="username">Usuário:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Entrar</button>
+            <p id="message" class="error-message"></p>
+        </form>
+    </div>
+
+    <script>
+        // ... (Seu código JavaScript de login permanece aqui) ...
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const messageElement = document.getElementById('message');
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    localStorage.setItem('authToken', data.token); // Salva o token
+                    window.location.href = 'dashboard.html'; // Redireciona
+                } else {
+                    messageElement.textContent = data.message || 'Login falhou.';
+                }
+            } catch (error) {
+                messageElement.textContent = 'Erro de conexão com o servidor.';
+            }
+        });
+    </script>
+</body>
+
+</html>

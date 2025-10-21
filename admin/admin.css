@@ -1,0 +1,321 @@
+/* Importação das Variáveis de Cores do Frontend (Paleta Consistente) */
+:root {
+    --color-primary: #FF7F00;
+    /* Laranja principal (Botões, Destaques) */
+    --color-secondary: #007BFF;
+    /* Azul Secundário (Botões de Tabela) */
+    --color-success: #28A745;
+    /* Verde para Salvar */
+    --color-danger: #D9534F;
+    /* Vermelho para Deletar/Sair */
+    --color-text-dark: #212529;
+    --color-text-medium: #495057;
+    --color-background-light: #F8F9FA;
+    --color-background-medium: #E9ECEF;
+    --color-white: #FFFFFF;
+    --color-header-footer-bg: #343A40;
+    /* Cinza Escuro para Header */
+    --color-header-footer-text: #F8F9FA;
+    --shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+body {
+    background-color: var(--color-background-light);
+    color: var(--color-text-dark);
+    padding: 30px;
+}
+
+/* ================================================= */
+/* --- 1. ESTILOS DA PÁGINA DE LOGIN --- */
+/* ================================================= */
+.login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    background: var(--color-white);
+    padding: 30px;
+    border-radius: 12px;
+    /* Borda mais moderna */
+    box-shadow: var(--shadow-md);
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--color-primary);
+    /* Título em laranja */
+}
+
+.login-container label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-secondary);
+    /* Botão de login em Azul */
+    color: var(--color-white);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.login-container button:hover {
+    background-color: #387cbf;
+    /* Tom mais escuro do azul */
+}
+
+.error-message {
+    color: var(--color-danger);
+    /* Vermelho para o erro */
+    margin-top: 15px;
+    text-align: center;
+    font-weight: 500;
+}
+
+
+/* ================================================= */
+/* --- 2. ESTILOS DO DASHBOARD (CRUD) --- */
+/* ================================================= */
+
+.dashboard-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    background-color: var(--color-white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+/* --- Header (Barra Superior) --- */
+.dashboard-container header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-header-footer-bg);
+    color: var(--color-white);
+    padding: 20px 30px;
+    border-radius: 12px 12px 0 0;
+}
+
+.dashboard-container header h1 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.dashboard-container header button {
+    background: var(--color-danger);
+    color: var(--color-white);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.dashboard-container header button:hover {
+    background: #c02e2e;
+}
+
+/* --- Títulos das Seções --- */
+.form-section h2,
+.list-section h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: var(--color-primary);
+    border-bottom: 2px solid var(--color-background-medium);
+    /* Linha divisória */
+    padding-bottom: 8px;
+}
+
+/* --- Seções (Formulário e Tabela) --- */
+.form-section,
+.list-section {
+    background: var(--color-white);
+    padding: 30px;
+    margin-top: 0;
+}
+
+/* --- Formulário (Inputs) --- */
+#productForm label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+#productForm input:not([type="checkbox"]),
+#productForm textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+#productForm button#saveButton {
+    background-color: var(--color-success);
+    width: auto;
+    padding: 12px 25px;
+    margin-top: 30px;
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+#productForm button#saveButton:hover {
+    background-color: #1e7e34;
+}
+
+/* --- Estilos da Tabela --- */
+#productsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+}
+
+#productsTable th,
+#productsTable td {
+    border: 1px solid #eee;
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+}
+
+#productsTable th {
+    background-color: var(--color-background-medium);
+    color: var(--color-text-dark);
+    font-weight: 700;
+}
+
+/* Estilos de Ações (Botões Editar/Deletar) */
+#productsTable button {
+    padding: 6px 12px;
+    margin-right: 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#productsTable button.delete-btn {
+    background-color: var(--color-danger);
+}
+
+#productsTable button:not(.delete-btn) {
+    background-color: var(--color-secondary);
+    /* Botão Editar em Azul */
+}
+
+
+/* ================================================= */
+/* --- 3. RESPONSIVIDADE --- */
+/* ================================================= */
+
+/* Para tablets (max-width: 1024px) - Mantido */
+@media (max-width: 1024px) {
+    .dashboard-container {
+        max-width: 95%;
+    }
+
+    .dashboard-container header {
+        padding: 15px 20px;
+    }
+
+    .form-section,
+    .list-section {
+        padding: 20px;
+    }
+
+    #productsTable th,
+    #productsTable td {
+        font-size: 13px;
+        padding: 10px 8px;
+    }
+
+    #productsTable button {
+        padding: 5px 10px;
+        margin-right: 5px;
+        font-size: 12px;
+    }
+}
+
+
+/* Para Celulares (max-width: 768px) - Mantido */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .dashboard-container header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .dashboard-container header h1 {
+        font-size: 20px;
+    }
+
+    .dashboard-container header button {
+        width: 100%;
+        order: 1;
+        padding: 10px;
+        margin-top: 10px;
+    }
+
+    .form-section,
+    .list-section {
+        padding: 15px;
+    }
+
+    .form-section h2,
+    .list-section h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    #productForm button#saveButton {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .list-section {
+        overflow-x: auto;
+    }
+
+    #productsTable {
+        min-width: 600px;
+        margin-top: 10px;
+    }
+
+    #productsTable th,
+    #productsTable td {
+        font-size: 12px;
+        padding: 8px 5px;
+    }
+}
