@@ -107,7 +107,7 @@ function createProductCardHTML(product) {
     // ✅ NOVO: Botão de link direto para a Shopee
     const shopeeButton = product.shopeeLink ? `
         <a href="${product.shopeeLink}" target="_blank" class="card-shopee-btn">
-            Comprar
+            Comprar na shopee
         </a>
     ` : '';
 
