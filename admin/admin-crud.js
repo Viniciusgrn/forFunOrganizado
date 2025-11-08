@@ -6,12 +6,12 @@ if (!authToken) {
     window.location.href = 'login.html';
 }
 
-// 2. Função para Obter Headers com Token (APENAS Authorization para FormData)
+// 2. Função para Obter Headers com Token
 const getHeaders = () => ({
     'Authorization': `Bearer ${authToken}`
 });
 
-// Função de Limpeza Comum (Usada após sucesso em POST/PUT)
+// Função de Limpeza Comum
 const resetFormAndLoad = () => {
     document.getElementById('productForm').reset();
     document.getElementById('productId').value = '';
@@ -32,8 +32,6 @@ document.getElementById('productForm').addEventListener('submit', async (e) => {
     // --- LÓGICA DE CRIAÇÃO (POST com arquivos) ---
     if (method === 'POST') {
         const formData = new FormData(e.target);
-
-        // CRÍTICO: Validação de arquivo (verifica se o campo mediaFiles está vazio)
         const mediaFiles = document.getElementById('mediaFiles');
         if (mediaFiles.files.length === 0) {
             alert("É necessário selecionar pelo menos uma imagem ou vídeo para criar o produto.");
@@ -61,9 +59,9 @@ document.getElementById('productForm').addEventListener('submit', async (e) => {
 
     // --- ATUALIZAÇÃO (PUT, apenas texto) ---
     if (method === 'PUT') {
+        // ⚠️ CORREÇÃO: Removido 'price' do objeto de dados
         const productData = {
             name: document.getElementById('name').value,
-            price: document.getElementById('price').value,
             shopeeLink: document.getElementById('shopeeLink').value,
             description: document.getElementById('description').value,
         };
@@ -95,18 +93,18 @@ document.getElementById('productForm').addEventListener('submit', async (e) => {
 const editProduct = (product) => {
     document.getElementById('productId').value = product.id;
     document.getElementById('name').value = product.name;
-    document.getElementById('price').value = product.price;
+    // ⚠️ CORREÇÃO: Removida a linha que preenche o 'price'
     document.getElementById('shopeeLink').value = product.shopeeLink;
     document.getElementById('description').value = product.description;
     document.getElementById('saveButton').textContent = 'Atualizar Produto';
 
-    // ✅ NOVO: Mostra as mídias existentes com prévia
+    // Mostra as mídias existentes
     const mediaArea = document.getElementById('currentMedia');
     mediaArea.innerHTML = '';
 
     if (product.media && product.media.length > 0) {
         const mainMedia = product.media[0];
-        
+
         const mediaTag = mainMedia.media_type && mainMedia.media_type.startsWith('video')
             ? `<video controls src="${mainMedia.file_path}" style="max-width: 100px; max-height: 100px; border-radius: 5px; margin-top: 5px;"></video>`
             : `<img src="${mainMedia.file_path}" style="max-width: 100px; max-height: 100px; border-radius: 5px; margin-top: 5px;">`;
@@ -117,7 +115,7 @@ const editProduct = (product) => {
             <p><small>A edição atualiza apenas o texto. Para trocar mídias, você precisa deletar e recriar o produto.</small></p>
         `;
     } else {
-         mediaArea.innerHTML = '<p>Nenhuma mídia anexada.</p>';
+        mediaArea.innerHTML = '<p>Nenhuma mídia anexada.</p>';
     }
 };
 
@@ -161,10 +159,9 @@ const loadProducts = async () => {
             const nameCell = row.insertCell();
             nameCell.innerHTML = `<strong>${product.name}</strong><br><small>Mídias: ${mediaCount}</small>`;
 
-            
-            row.insertCell().textContent = product.views_count || 0;
+            // ⚠️ CORREÇÃO: Célula de Preço removida (conforme seu código)
 
-            // ✅ CORREÇÃO: ADICIONA A CÉLULA DE CLIQUES SHOPEE
+            row.insertCell().textContent = product.views_count || 0;
             row.insertCell().textContent = product.shopee_clicks || 0;
 
             // --- Célula de Destaque (Checkbox) ---
