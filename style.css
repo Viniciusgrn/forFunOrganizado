@@ -26,7 +26,7 @@
     --color-white: #FFFFFF;
 
     /* Cores do Header e Footer */
-    --color-header-footer-bg: #FF7F00;
+    --color-header-footer-bg: rgba(195,177,225, 0.95);
     /* Preto bem escuro/quase cinza para header e footer */
     --color-header-footer-text: #F8F9FA;
     /* Texto branco no header/footer */
