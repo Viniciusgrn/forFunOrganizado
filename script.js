@@ -59,6 +59,9 @@ const fetchFeaturedProducts = async () => {
 async function initHomePage() {
     // 1. CARREGA TODOS OS DADOS
     allProductsData = await fetchProducts();
+    if (allProductsData && allProductsData.length > 0) {
+        allProductsData.reverse();
+    }
     const featuredProducts = await fetchFeaturedProducts();
 
     // 2. CONFIGURAÇÃO DA BUSCA DINÂMICA
