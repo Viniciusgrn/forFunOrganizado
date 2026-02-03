@@ -52,10 +52,23 @@ const initializeDB = () => {
         id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE, password TEXT
     )`, (err) => {
         if (!err) {
-            db.get(`SELECT id FROM users WHERE username = 'admin'`, (err, row) => {
-                if (!row) {
-                    db.run(`INSERT INTO users (username, password) VALUES ('eduardo', 'Centauro@10')`);
-                    console.log("Usuário admin padrão criado (admin/123456).");
+            // --- CORREÇÃO DO CRASH LOOP ---
+            // Tenta inserir o usuário. Se já existir, o código ignora o erro e continua rodando.
+            const insertQuery = `INSERT INTO users (username, password) VALUES (?, ?)`;
+            const adminUser = 'eduardo'; 
+            const adminPass = 'Centauro@10';
+
+            db.run(insertQuery, [adminUser, adminPass], (err) => {
+                if (err) {
+                    // Se o erro for "UNIQUE constraint failed", significa que o usuário já existe.
+                    // Isso é bom! Ignoramos o erro e o servidor continua feliz.
+                    if (err.message.includes('UNIQUE constraint') || err.code === 'SQLITE_CONSTRAINT') {
+                        console.log(`>> Usuário '${adminUser}' já existe no banco. Inicialização segura concluída.`);
+                    } else {
+                        console.error('Erro crítico ao criar usuário:', err);
+                    }
+                } else {
+                    console.log(`Usuário padrão '${adminUser}' criado com sucesso.`);
                 }
             });
         }
@@ -63,10 +76,11 @@ const initializeDB = () => {
 
     // Tabela de Produtos - Incluindo shopee_clicks
     db.run(`CREATE TABLE IF NOT EXISTS products (
-        id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, price TEXT, description TEXT, shopeeLink TEXT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT, shopeeLink TEXT,
         views_count INTEGER DEFAULT 0, is_featured INTEGER DEFAULT 0,
         shopee_clicks INTEGER DEFAULT 0     
     )`);
+    // Nota: Removi a coluna 'price' da criação da tabela pois você a removeu do sistema anteriormente.
 
     // TABELA DE MÍDIA - Incluindo is_main
     db.run(`CREATE TABLE IF NOT EXISTS media (
@@ -122,16 +136,17 @@ app.get('/api/products', async (req, res) => {
 
 // CRIAR PRODUTO (POST) - MARCA O PRIMEIRO UPLOAD COMO IS_MAIN=1
 app.post('/api/products', isAuthenticated, upload, (req, res) => {
-    const { name, price, description, shopeeLink } = req.body;
+    // Removido 'price' da desestruturação
+    const { name, description, shopeeLink } = req.body;
     const files = req.files;
 
     if (!files || files.length === 0) {
         return res.status(400).send({ message: "É necessário fazer upload de pelo menos uma imagem/vídeo." });
     }
 
-    // Insere o novo produto na tabela 'products'
-    db.run(`INSERT INTO products (name, price, description, shopeeLink, views_count, is_featured, shopee_clicks) VALUES (?, ?, ?, ?, 0, 0, 0)`,
-        [name, price, description, shopeeLink],
+    // Insere o novo produto na tabela 'products' (sem price)
+    db.run(`INSERT INTO products (name, description, shopeeLink, views_count, is_featured, shopee_clicks) VALUES (?, ?, ?, 0, 0, 0)`,
+        [name, description, shopeeLink],
         function (err) {
             if (err) {
                 if (req.files) req.files.forEach(file => fs.unlinkSync(file.path));
@@ -156,7 +171,7 @@ app.post('/api/products', isAuthenticated, upload, (req, res) => {
             });
 
             Promise.all(mediaInserts)
-                .then(() => res.status(201).json({ id: productId, name, price, description, shopeeLink, mediaCount: files.length }))
+                .then(() => res.status(201).json({ id: productId, name, description, shopeeLink, mediaCount: files.length }))
                 .catch(err => {
                     console.error("Erro ao salvar mídias:", err);
                     res.status(500).send({ message: "Produto criado, mas houve falha no upload de mídia." });
@@ -168,16 +183,17 @@ app.post('/api/products', isAuthenticated, upload, (req, res) => {
 // ATUALIZAR PRODUTO (PUT) - Apenas atualiza campos de texto
 app.put('/api/products/:id', isAuthenticated, bodyParser.json(), (req, res) => {
     const id = parseInt(req.params.id);
-    const { name, price, description, shopeeLink } = req.body;
+    // Removido 'price'
+    const { name, description, shopeeLink } = req.body;
 
-    const sql = `UPDATE products SET name = ?, price = ?, description = ?, shopeeLink = ? WHERE id = ?`;
+    const sql = `UPDATE products SET name = ?, description = ?, shopeeLink = ? WHERE id = ?`;
 
-    db.run(sql, [name, price, description, shopeeLink, id], function (err) {
+    db.run(sql, [name, description, shopeeLink, id], function (err) {
         if (err || this.changes === 0) {
             if (this.changes === 0) return res.status(404).send({ message: "Produto não encontrado ou nenhum dado alterado." });
             return res.status(500).send({ message: "Erro ao atualizar produto." });
         }
-        res.json({ id, name, price, description, shopeeLink });
+        res.json({ id, name, description, shopeeLink });
     });
 });
 
@@ -235,7 +251,7 @@ app.put('/api/media/set-main/:mediaId', isAuthenticated, bodyParser.json(), (req
 app.post('/api/products/view/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const sql = `UPDATE products SET views_count = views_count + 1 WHERE id = ?`;
-    db.run(sql, [id], function (err) { // ✅ CORRIGIDO: Passando [id] como array
+    db.run(sql, [id], function (err) { 
         if (err || this.changes === 0) return res.status(500).send({ message: "Erro ao registrar visualização." });
         res.status(200).send({ message: "Visualização registrada." });
     });
@@ -245,7 +261,7 @@ app.post('/api/products/view/:id', (req, res) => {
 app.post('/api/products/click/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const sql = `UPDATE products SET shopee_clicks = shopee_clicks + 1 WHERE id = ?`;
-    db.run(sql, [id], function (err) { // ✅ CORRIGIDO: Passando [id] como array
+    db.run(sql, [id], function (err) { 
         if (err || this.changes === 0) return res.status(500).send({ message: "Erro ao registrar clique." });
         res.status(200).send({ message: "Clique na Shopee registrado." });
     });
@@ -284,4 +300,5 @@ app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
     console.log(`Pasta de uploads: ${uploadDir}`);
     console.log(`Admin Dashboard em http://localhost:${PORT}/admin/login.html`);
+
 });
